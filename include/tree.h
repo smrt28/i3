@@ -69,6 +69,8 @@ void tree_close_con(kill_window_t kill_window);
  */
 void tree_next(char way, orientation_t orientation);
 
+bool tree_Nth(int n);
+
 /**
  * Closes the given container including all children.
  * Returns true if the container was killed or false if just WM_DELETE was sent

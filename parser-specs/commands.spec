@@ -134,7 +134,7 @@ state WORKSPACE_NUMBER:
 # focus parent|child
 # focus
 state FOCUS:
-  direction = 'left', 'right', 'up', 'down'
+  direction = 'left', 'right', 'up', 'down', '1', '2', '3', '4'
       -> call cmd_focus_direction($direction)
   'output'
       -> FOCUS_OUTPUT

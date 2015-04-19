@@ -691,6 +691,40 @@ void tree_next(char way, orientation_t orientation) {
 }
 
 /*
+ * Traverse tree and focus n-th node which has a window
+ *
+ * */
+static void _tree_Nth(Con *con, int *n) {
+    if (*n == 0) return;
+
+    if (con->window) {
+        --(*n); if (*n == 0) { con_focus(con); return; }
+    }
+
+    if (TAILQ_EMPTY(&(con->nodes_head))) return;
+    Con *current = TAILQ_FIRST(&(con->nodes_head));
+
+    for (;;) {
+        if (!current) return;
+        _tree_Nth(current, n);
+        if (*n == 0) return;
+        current = TAILQ_NEXT(current, nodes);
+    }
+}
+
+/*
+ * Set focus to n-th window on current workspace
+ */
+bool tree_Nth(int n) {
+    if (n <= 0) return false;
+    Con *con = con_get_workspace(focused);
+    if (!con) return false;
+    _tree_Nth(con, &n);
+    if (n) return false;
+    return true;
+}
+
+/*
  * tree_flatten() removes pairs of redundant split containers, e.g.:
  *       [workspace, horizontal]
  *   [v-split]           [child3]
